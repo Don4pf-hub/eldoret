@@ -1,12 +1,13 @@
 services:
   - type: web
-    name: eldoret
+    name: eldoret-lab
     runtime: python
     plan: free
+    region: frankfurt
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        sync: false
+        value: "postgresql://neondb_owner:npg_CKafhBrY0t4k@ep-holy-cloud-axk2xf2w-pooler.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require"
