@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Eldoret Clinical Laboratory{% endblock %}</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-light">
+<div class="container-fluid">
+<div class="row">
+
+<!-- Sidebar -->
+<div class="col-md-3 bg-primary text-white vh-100 p-4">
+<h4 class="mb-4">🧪 Eldoret Clinical Laboratory</h4>
+<hr>
+<h5>Navigation</h5>
+<ul class="nav flex-column">
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'dashboard' %}fw-bold{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'patients' %}fw-bold{% endif %}" href="{{ url_for('patients') }}">Patient Management</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'lab_request' %}fw-bold{% endif %}" href="{{ url_for('lab_request') }}">Laboratory Requests</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'lab_request_list' %}fw-bold{% endif %}" href="{{ url_for('lab_request_list') }}">View Requests</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'sample_tracking' %}fw-bold{% endif %}" href="{{ url_for('sample_tracking') }}">Sample Tracking</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'result_entry' %}fw-bold{% endif %}" href="{{ url_for('result_entry') }}">Result Entry</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'result_validation' %}fw-bold{% endif %}" href="{{ url_for('result_validation') }}">Result Validation</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'result_approval' %}fw-bold{% endif %}" href="{{ url_for('result_approval') }}">Result Approval</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'notifications' %}fw-bold{% endif %}" href="{{ url_for('notifications') }}">Notifications</a></li>
+<li class="nav-item mb-2"><a class="nav-link text-white {% if active == 'reports' %}fw-bold{% endif %}" href="{{ url_for('reports') }}">Reports</a></li>
+<li class="nav-item mt-5"><a class="btn btn-light w-100" href="{{ url_for('logout') }}">Logout</a></li>
+</ul>
+</div>
+
+<!-- Main Content -->
+<div class="col-md-9 p-4">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% block content %}{% endblock %}
+
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

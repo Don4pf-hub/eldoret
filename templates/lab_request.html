@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Laboratory Test Request{% endblock %}
+{% set active = 'lab_request' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4 class="mb-0">New Laboratory Test Request</h4>
+</div>
+<div class="card-body table-responsive">
+<form method="POST" action="{{ url_for('lab_request') }}">
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Request Number</label>
+<input type="text" class="form-control" value="{{ next_number }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Request Date</label>
+<input type="date" name="requestDate" class="form-control">
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Patient</label>
+<select name="patient" class="form-select" required>
+<option value="">Select Patient</option>
+{% for patient in patients %}
+<option value="{{ patient.id }}">{{ patient.patient_number }} - {{ patient.fullname }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Requesting Doctor</label>
+<input type="text" name="doctor" class="form-control" placeholder="Dr. Sarah Chepkemoi" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Laboratory Test</label>
+<select name="testType" class="form-select" required>
+<option value="">Select Test</option>
+<option>Complete Blood Count (CBC)</option>
+<option>Malaria Test</option>
+<option>Urinalysis</option>
+<option>Blood Sugar</option>
+<option>HIV Test</option>
+<option>Liver Function Test</option>
+<option>Kidney Function Test</option>
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Priority</label>
+<select name="priority" class="form-select" required>
+<option value="">Select Priority</option>
+<option>Routine</option>
+<option>Urgent</option>
+</select>
+</div>
+
+<div class="col-12 mb-3">
+<label class="form-label">Clinical Notes</label>
+<textarea name="clinicalNotes" class="form-control" rows="4" placeholder="Enter clinical notes..."></textarea>
+</div>
+
+</div>
+
+<div class="mt-3">
+<button type="submit" class="btn btn-success">Submit Request</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+<a href="{{ url_for('dashboard') }}" class="btn btn-danger">Cancel</a>
+</div>
+
+</form>
+</div>
+</div>
+{% endblock %}

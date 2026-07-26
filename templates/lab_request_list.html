@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Laboratory Requests{% endblock %}
+{% set active = 'lab_request_list' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4 class="mb-0">Laboratory Requests</h4>
+</div>
+<div class="card-body table-responsive">
+<table class="table table-bordered table-hover">
+<thead class="table-light">
+<tr>
+<th>Request No</th>
+<th>Patient</th>
+<th>Doctor</th>
+<th>Test</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+{% for req in requests %}
+<tr>
+<td>{{ req.request_number }}</td>
+<td>{{ req.patient_name }}</td>
+<td>{{ req.doctor }}</td>
+<td>{{ req.test }}</td>
+<td>{{ req.priority }}</td>
+<td><span class="badge bg-warning">{{ req.status }}</span></td>
+<td><button class="btn btn-primary btn-sm">View</button></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+{% endblock %}

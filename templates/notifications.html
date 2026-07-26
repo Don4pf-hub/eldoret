@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% set active = 'notifications' %}
+{% block content %}
+
+<h2 class="mb-4">System Notifications</h2>
+
+<div class="list-group">
+<div class="list-group-item">
+<h5>Total Registered Patients</h5>
+<p>{{ counts.patients }} patient(s) currently registered.</p>
+</div>
+<div class="list-group-item">
+<h5>Laboratory Requests</h5>
+<p>{{ counts.requests }} request(s) submitted.</p>
+</div>
+<div class="list-group-item">
+<h5>Samples Collected</h5>
+<p>{{ counts.samples }} sample(s) collected.</p>
+</div>
+<div class="list-group-item">
+<h5>Results Entered</h5>
+<p>{{ counts.results }} laboratory result(s) entered.</p>
+</div>
+<div class="list-group-item">
+<h5>Results Validated</h5>
+<p>{{ counts.validations }} result(s) validated.</p>
+</div>
+<div class="list-group-item">
+<h5>Results Approved</h5>
+<p>{{ counts.approvals }} result(s) approved.</p>
+</div>
+</div>
+
+{% endblock %}

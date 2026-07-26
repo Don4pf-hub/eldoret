@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Result Validation{% endblock %}
+{% set active = 'result_validation' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4>Validate Laboratory Result</h4>
+</div>
+<div class="card-body">
+<form method="POST" action="{{ url_for('result_validation') }}">
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Sample ID</label>
+<input type="text" class="form-control" value="{{ latest_result.sample_id if latest_result else '' }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Patient</label>
+<input type="text" class="form-control" value="{{ latest_result.patient_name if latest_result else '' }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Laboratory Test</label>
+<input type="text" class="form-control" value="{{ latest_result.test if latest_result else '' }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Status</label>
+<input type="text" class="form-control" value="Pending Validation" readonly>
+</div>
+
+<div class="col-12 mb-3">
+<label>Laboratory Result</label>
+<textarea class="form-control" rows="6" readonly>{{ latest_result.result if latest_result else '' }}</textarea>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Validation Decision</label>
+<select name="validationStatus" class="form-select" required>
+<option value="">Select Decision</option>
+<option>Approved</option>
+<option>Rejected</option>
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Validated By</label>
+<input type="text" name="validator" class="form-control" placeholder="Senior Laboratory Technologist" required>
+</div>
+
+<div class="col-12 mb-3">
+<label>Validation Comments</label>
+<textarea name="comments" class="form-control" rows="4" placeholder="Enter validation comments..." required></textarea>
+</div>
+
+</div>
+
+<button type="submit" class="btn btn-success">Validate Result</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+<a href="{{ url_for('dashboard') }}" class="btn btn-danger">Cancel</a>
+
+</form>
+</div>
+</div>
+{% endblock %}

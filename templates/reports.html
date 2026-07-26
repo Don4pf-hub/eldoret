@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Laboratory Reports{% endblock %}
+{% set active = 'reports' %}
+{% block content %}
+
+<h2>Laboratory Reports</h2>
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">Generated Report</div>
+<div class="card-body">
+<table class="table table-bordered">
+<thead>
+<tr><th>Module</th><th>Total Records</th></tr>
+</thead>
+<tbody>
+{% for module, total in counts.items() %}
+<tr><td>{{ module }}</td><td>{{ total }}</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+
+{% endblock %}

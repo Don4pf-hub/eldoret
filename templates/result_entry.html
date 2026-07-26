@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Laboratory Result Entry{% endblock %}
+{% set active = 'result_entry' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4 class="mb-0">Laboratory Result Entry</h4>
+</div>
+<div class="card-body">
+<form method="POST" action="{{ url_for('result_entry') }}">
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Sample ID</label>
+<select id="resultSample" name="resultSample" class="form-select" onchange="loadSamplePatient()" required>
+<option value="">Select Sample</option>
+{% for sample in samples %}
+<option value="{{ sample.sample_id }}">{{ sample.sample_id }} - {{ sample.patient_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Patient</label>
+<input type="text" id="resultPatient" name="resultPatient" class="form-control" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Laboratory Test</label>
+<select name="labTest" class="form-select" required>
+<option value="">Select Test</option>
+<option>Complete Blood Count (CBC)</option>
+<option>Malaria Test</option>
+<option>Blood Sugar</option>
+<option>Urinalysis</option>
+<option>HIV Test</option>
+<option>Liver Function Test</option>
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Result Status</label>
+<select name="resultStatus" class="form-select" required>
+<option value="">Select Status</option>
+<option>Normal</option>
+<option>Abnormal</option>
+<option>Critical</option>
+</select>
+</div>
+
+<div class="col-12 mb-3">
+<label class="form-label">Laboratory Result</label>
+<textarea name="result" class="form-control" rows="5" placeholder="Enter laboratory findings here..." required></textarea>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Tested By</label>
+<input type="text" name="testedBy" class="form-control" placeholder="Laboratory Technician" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Date Tested</label>
+<input type="date" name="dateTested" class="form-control" required>
+</div>
+
+</div>
+
+<div class="mt-3">
+<button type="submit" class="btn btn-success">Save Result</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+<a href="{{ url_for('dashboard') }}" class="btn btn-danger">Cancel</a>
+</div>
+
+</form>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function loadSamplePatient(){
+    let sampleId = document.getElementById("resultSample").value;
+    let patientBox = document.getElementById("resultPatient");
+    if(sampleId === ""){
+        patientBox.value = "";
+        return;
+    }
+    fetch(`/api/sample/${sampleId}`)
+        .then(res => res.json())
+        .then(data => { patientBox.value = data.patient_name; });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Add New Patient{% endblock %}
+{% set active = 'patients' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4 class="mb-0">Register New Patient</h4>
+</div>
+<div class="card-body">
+<form method="POST" action="{{ url_for('add_patient') }}">
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Patient Number</label>
+<input type="text" class="form-control" value="{{ next_number }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">National ID</label>
+<input type="text" name="nationalId" class="form-control" placeholder="Enter National ID" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Full Name</label>
+<input type="text" name="fullname" class="form-control" placeholder="Enter Full Name" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Gender</label>
+<select name="gender" class="form-select" required>
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Date of Birth</label>
+<input type="date" name="dob" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Phone Number</label>
+<input type="tel" name="phone" class="form-control" placeholder="07XXXXXXXX" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">County</label>
+<input type="text" class="form-control" value="Uasin Gishu" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Sub County</label>
+<input type="text" name="subCounty" class="form-control" placeholder="e.g. Turbo">
+</div>
+
+<div class="col-12 mb-3">
+<label class="form-label">Physical Address</label>
+<textarea name="address" class="form-control" rows="3" placeholder="Enter Patient Address"></textarea>
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Emergency Contact</label>
+<input type="text" name="emergencyContact" class="form-control" placeholder="Enter Contact Person">
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Emergency Phone</label>
+<input type="tel" name="emergencyPhone" class="form-control" placeholder="07XXXXXXXX">
+</div>
+
+</div>
+
+<div class="mt-4">
+<button type="submit" class="btn btn-success">Save Patient</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+<a href="{{ url_for('patients') }}" class="btn btn-danger">Cancel</a>
+</div>
+
+</form>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Sample Tracking{% endblock %}
+{% set active = 'sample_tracking' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4>Sample Collection &amp; Tracking</h4>
+</div>
+<div class="card-body">
+<form method="POST" action="{{ url_for('sample_tracking') }}">
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Sample ID</label>
+<input type="text" class="form-control" value="{{ next_id }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Request Number</label>
+<select id="requestNumber" name="requestNumber" class="form-select" onchange="showSelectedPatient()" required>
+<option value="">Select Request</option>
+{% for req in requests %}
+<option value="{{ req.id }}">{{ req.request_number }} - {{ req.patient_name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Patient</label>
+<input type="text" id="samplePatient" class="form-control" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Sample Type</label>
+<select name="sampleType" class="form-select" required>
+<option value="">Select Sample</option>
+<option>Blood</option>
+<option>Urine</option>
+<option>Stool</option>
+<option>Sputum</option>
+<option>Saliva</option>
+</select>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Collection Date</label>
+<input type="date" name="collectionDate" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Collection Time</label>
+<input type="time" name="collectionTime" class="form-control" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Collected By</label>
+<input type="text" name="technician" class="form-control" placeholder="Laboratory Technician" required>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Status</label>
+<select name="status" class="form-select" required>
+<option value="">Select Status</option>
+<option>Collected</option>
+<option>Received</option>
+<option>In Analysis</option>
+<option>Completed</option>
+</select>
+</div>
+
+</div>
+
+<div class="mt-3">
+<button type="submit" class="btn btn-success">Save Sample</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+<a href="{{ url_for('dashboard') }}" class="btn btn-danger">Cancel</a>
+</div>
+
+</form>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showSelectedPatient(){
+    let requestId = document.getElementById("requestNumber").value;
+    let patientBox = document.getElementById("samplePatient");
+    if(requestId === ""){
+        patientBox.value = "";
+        return;
+    }
+    fetch(`/api/lab-request/${requestId}/patient`)
+        .then(res => res.json())
+        .then(data => { patientBox.value = data.patient_name; });
+}
+</script>
+{% endblock %}

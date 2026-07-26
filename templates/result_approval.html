@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Result Approval{% endblock %}
+{% set active = 'result_approval' %}
+{% block content %}
+
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h4>Approve Laboratory Result</h4>
+</div>
+<div class="card-body">
+<form method="POST" action="{{ url_for('result_approval') }}">
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label>Sample ID</label>
+<input class="form-control" value="{{ latest_validation.sample_id if latest_validation else '' }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Patient Name</label>
+<input class="form-control" value="{{ latest_validation.patient_name if latest_validation else '' }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Laboratory Test</label>
+<input class="form-control" value="{{ latest_validation.test if latest_validation else '' }}" readonly>
+</div>
+
+<div class="col-md-6 mb-3">
+<label>Validation Status</label>
+<input class="form-control" value="{{ latest_validation.decision if latest_validation else '' }}" readonly>
+</div>
+
+<div class="col-12 mb-3">
+<label>Result Summary</label>
+<textarea class="form-control" rows="6" readonly>{{ latest_validation.result if latest_validation else '' }}</textarea>
+</div>
+
+<div class="col-md-6">
+<label>Approval Decision</label>
+<select name="approvalStatus" class="form-select" required>
+<option value="">Select</option>
+<option>Approved</option>
+<option>Returned for Review</option>
+</select>
+</div>
+
+<div class="col-md-6">
+<label>Approved By</label>
+<input type="text" name="approvedBy" class="form-control" placeholder="Laboratory Manager" required>
+</div>
+
+<div class="col-12 mt-3">
+<label>Approval Remarks</label>
+<textarea name="approvalRemarks" class="form-control" rows="4" placeholder="Approval comments..." required></textarea>
+</div>
+
+</div>
+
+<div class="mt-4">
+<button type="submit" class="btn btn-success">Approve Result</button>
+<button type="reset" class="btn btn-secondary">Reset</button>
+<a href="{{ url_for('dashboard') }}" class="btn btn-danger">Cancel</a>
+</div>
+
+</form>
+</div>
+</div>
+{% endblock %}
